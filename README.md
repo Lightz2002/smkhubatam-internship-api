@@ -1,1 +1,0 @@
-# smkhubatam-internship-api
