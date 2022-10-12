@@ -1,16 +1,17 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Role } from 'src/roles/role.entity';
-import { Repository } from 'typeorm';
-import { CreateUserDto } from './Dto/create-user.dto';
-import { User } from './user.entity';
+/* eslint-disable prettier/prettier */
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Role } from "src/roles/role.entity";
+import { Repository } from "typeorm";
+import { CreateUserDto } from "./Dto/create-user.dto";
+import { User } from "./user.entity";
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    private roleRepository: Repository<Role>,
+    private roleRepository: Repository<Role>
   ) {}
 
   findAll(): Promise<User[]> {
@@ -21,8 +22,8 @@ export class UsersService {
     return this.usersRepository.findOneBy({ Id: id });
   }
 
-  create(createUserDto: CreateUserDto): Promise<User> {
-    const role = this.roleRepository.findOneBy({ Id: createUserDto.Role });
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const role = await this.roleRepository.findOneBy({ Id: createUserDto.Role });
 
     const user = new User();
     user.Name = createUserDto.Name;
