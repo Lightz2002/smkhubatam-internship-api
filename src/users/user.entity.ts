@@ -21,8 +21,8 @@ export class User {
   @Column()
   Password: string;
 
-  @OneToOne(() => Role, (role) => role.User)
-  @JoinColumn()
+  @OneToOne(() => Role, (role) => role.User, { eager: true })
+  @JoinColumn({ name: 'Role' })
   Role: Role;
 
   @Column({ default: true })

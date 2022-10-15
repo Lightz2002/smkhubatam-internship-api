@@ -32,7 +32,6 @@ export class UsersService {
     user.Username = createUserDto.Username;
     user.Password = createUserDto.Password;
     user.Role = role;
-    user.IsActive = createUserDto.IsActive;
 
     return this.usersRepository.save(user);
   }
