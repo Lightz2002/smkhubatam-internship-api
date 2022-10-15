@@ -11,7 +11,9 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    private roleRepository: Repository<Role>
+    
+    @InjectRepository(Role)
+    private rolesRepository: Repository<Role>,
   ) {}
 
   findAll(): Promise<User[]> {
@@ -23,7 +25,7 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const role = await this.roleRepository.findOneBy({ Id: createUserDto.Role });
+    const role = await this.rolesRepository.findOneBy({ Id: createUserDto.Role });
 
     const user = new User();
     user.Name = createUserDto.Name;
