@@ -24,6 +24,10 @@ export class UsersService {
     return this.usersRepository.findOneBy({ Id: id });
   }
 
+  findByUsername(username: string): Promise<User> {
+    return this.usersRepository.findOneBy({ Username: username });
+  }
+
   async create(createUserDto: CreateUserDto): Promise<User> {
     const role = await this.rolesRepository.findOneBy({ Id: createUserDto.Role });
 
