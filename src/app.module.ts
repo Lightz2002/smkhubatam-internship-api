@@ -8,6 +8,9 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
+import { AuthService } from './auth/auth.service';
+import { UsersService } from './users/users.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -27,7 +30,7 @@ import { RolesModule } from './roles/roles.module';
     RolesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AuthService, UsersService, JwtService],
 })
 export class AppModule {
   constructor(private dataSource: DataSource) {}
