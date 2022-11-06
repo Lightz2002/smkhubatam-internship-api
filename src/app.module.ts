@@ -11,6 +11,7 @@ import { RolesModule } from './roles/roles.module';
 import { AuthService } from './auth/auth.service';
 import { UsersService } from './users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { MenuModule } from './menu/menu.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { JwtService } from '@nestjs/jwt';
       autoLoadEntities: true,
     }),
     RolesModule,
+    MenuModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, UsersService, JwtService],
