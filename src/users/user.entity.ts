@@ -2,7 +2,7 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
+  ManyToOne,
   JoinColumn,
 } from 'typeorm';
 import { Role } from 'src/roles/role.entity';
@@ -21,7 +21,7 @@ export class User {
   @Column()
   Password: string;
 
-  @OneToOne(() => Role, (role) => role.User, { eager: true })
+  @ManyToOne(() => Role, (role) => role.Users, { eager: true })
   @JoinColumn({ name: 'Role' })
   Role: Role;
 

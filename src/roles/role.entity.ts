@@ -4,7 +4,7 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
+  OneToMany,
   ManyToMany,
   JoinTable,
 } from 'typeorm';
@@ -20,8 +20,8 @@ export class Role {
   @Column()
   Name: string;
 
-  @OneToOne(() => User, (user) => user.Role)
-  User: User;
+  @OneToMany(() => User, (user) => user.Role)
+  Users: User[];
 
   @ManyToMany(() => Menu, (menu) => menu.Roles)
   @JoinTable()
