@@ -20,13 +20,12 @@ export class RolesService {
   }
 
   async findRolemenu(): Promise<any> {
-    console.log(111);
     const rolemenus = await this.rolesRepository
       .createQueryBuilder('role')
       .leftJoinAndSelect('role.Menus', 'Menu')
       .getOne();
 
-    console.log(rolemenus);
+    return rolemenus;
   }
 
   async create(createRoleDto: CreateRoleDto): Promise<Role> {
