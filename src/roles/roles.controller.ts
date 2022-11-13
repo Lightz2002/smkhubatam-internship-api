@@ -20,6 +20,11 @@ export class RolesController {
     return await this.roleService.findAll();
   }
 
+  @Get('rolemenu')
+  async getRolemenu() {
+    return await this.roleService.findRolemenu();
+  }
+
   @Get(':roleId')
   async getRole(@Param('roleId') roleId) {
     return await this.roleService.findOne(roleId);

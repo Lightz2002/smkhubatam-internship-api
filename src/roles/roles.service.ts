@@ -19,6 +19,16 @@ export class RolesService {
     return this.rolesRepository.findOneBy({ Id: id });
   }
 
+  async findRolemenu(): Promise<any> {
+    console.log(111);
+    const rolemenus = await this.rolesRepository
+      .createQueryBuilder('role')
+      .leftJoin('Menu.Roles', 'Role')
+      .getOne();
+
+    console.log(rolemenus);
+  }
+
   async create(createRoleDto: CreateRoleDto): Promise<Role> {
     const role = new Role();
     role.Code = createRoleDto.Code;
