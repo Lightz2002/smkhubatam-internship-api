@@ -23,7 +23,7 @@ export class RolesService {
     console.log(111);
     const rolemenus = await this.rolesRepository
       .createQueryBuilder('role')
-      .leftJoin('Menu.Roles', 'Role')
+      .leftJoinAndSelect('role.Menus', 'Menu')
       .getOne();
 
     console.log(rolemenus);
