@@ -1,3 +1,4 @@
+import { UsersService } from './users/users.service';
 import { Controller, Request, Get, Post, UseGuards } from '@nestjs/common';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
@@ -6,7 +7,10 @@ import { Public } from './auth/public.decorator';
 @Controller()
 export class AppController {
   // constructor(private readonly appService: AppService) {}
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UsersService,
+  ) {}
 
   @Public()
   @UseGuards(LocalAuthGuard)
@@ -18,6 +22,6 @@ export class AppController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
-    return req.user;
+    return this.userService.findOne(req.user.id);
   }
 }
