@@ -1,3 +1,4 @@
+import { SchoolClassesModule } from './schoolclasses/schoolclasses.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
@@ -12,6 +13,9 @@ import { AuthService } from './auth/auth.service';
 import { UsersService } from './users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { MenuModule } from './menu/menu.module';
+import { Major } from './majors/major.entity';
+import { SchoolClass } from './schoolclasses/schoolclass.entity';
+import { MajorsModule } from './majors/majors.module';
 
 @Module({
   imports: [
@@ -24,12 +28,14 @@ import { MenuModule } from './menu/menu.module';
       username: 'vultradmin',
       password: 'AVNS_0JExuKG2MZHks3EIzHq',
       database: 'smkhu',
-      entities: [User, Role],
+      entities: [User, Role, Major, SchoolClass],
       synchronize: false, // set false in production,
       autoLoadEntities: true,
     }),
     RolesModule,
     MenuModule,
+    SchoolClassesModule,
+    MajorsModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, UsersService, JwtService],

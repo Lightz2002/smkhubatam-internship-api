@@ -6,6 +6,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Role } from 'src/roles/role.entity';
+import { SchoolClass } from 'src/schoolclasses/schoolclass.entity';
 
 @Entity()
 export class User {
@@ -24,6 +25,12 @@ export class User {
   @ManyToOne(() => Role, (role) => role.Users, { eager: true })
   @JoinColumn({ name: 'Role' })
   Role: Role;
+
+  @ManyToOne(() => SchoolClass, (schoolClass) => schoolClass.Users, {
+    eager: true,
+  })
+  @JoinColumn({ name: 'SchoolClass' })
+  SchoolClass: SchoolClass;
 
   @Column({ default: true })
   IsActive: boolean;
