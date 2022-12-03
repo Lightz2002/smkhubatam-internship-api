@@ -4,6 +4,8 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Role } from 'src/roles/role.entity';
 import { SchoolClass } from 'src/schoolclasses/schoolclass.entity';
@@ -18,6 +20,12 @@ export class User {
 
   @Column()
   Name: string;
+
+  @Column()
+  Gender: string;
+
+  @Column()
+  Age: number;
 
   @Column()
   Password: string;
@@ -35,9 +43,19 @@ export class User {
   @Column({ default: true })
   IsActive: boolean;
 
-  @Column({ default: null, type: 'datetime' })
-  Created_At?: Date;
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  Created_at: Date;
 
-  @Column({ default: null, type: 'datetime' })
-  Updated_At?: Date;
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
+  Updated_at: Date;
+
+  @Column({ default: null, type: 'year' })
+  YearEntered: Date;
 }
