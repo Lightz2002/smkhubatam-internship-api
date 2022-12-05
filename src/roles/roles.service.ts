@@ -19,10 +19,12 @@ export class RolesService {
     return this.rolesRepository.findOneBy({ Id: id });
   }
 
-  async findRolemenu(): Promise<any> {
+  async findRolemenu(userId: string): Promise<any> {
     const rolemenus = await this.rolesRepository
       .createQueryBuilder('role')
+      .leftJoin('role.Users', 'User')
       .leftJoinAndSelect('role.Menus', 'Menu')
+      .where('User.id = :userId', { userId: userId })
       .getOne();
 
     return rolemenus;

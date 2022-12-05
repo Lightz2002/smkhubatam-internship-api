@@ -6,6 +6,7 @@ import {
   Body,
   Delete,
   Query,
+  Request,
   Param,
 } from '@nestjs/common';
 import { RolesService } from './roles.service';
@@ -21,8 +22,8 @@ export class RolesController {
   }
 
   @Get('rolemenu')
-  async getRolemenu() {
-    return await this.roleService.findRolemenu();
+  async getRolemenu(@Request() req: any) {
+    return await this.roleService.findRolemenu(req.user.id);
   }
 
   @Get(':roleId')
