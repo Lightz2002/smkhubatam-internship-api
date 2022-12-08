@@ -16,6 +16,8 @@ import { MenuModule } from './menu/menu.module';
 import { Major } from './majors/major.entity';
 import { SchoolClass } from './schoolclasses/schoolclass.entity';
 import { MajorsModule } from './majors/majors.module';
+import { LocationsModule } from './locations/locations.module';
+import { Location } from './locations/location.entity';
 
 @Module({
   imports: [
@@ -23,12 +25,12 @@ import { MajorsModule } from './majors/majors.module';
     UsersModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'remotemysql.com',
-      port: 3306,
-      username: 'IspLEEbCs8',
-      password: 'cwWFdo11Z2',
-      database: 'IspLEEbCs8',
-      entities: [User, Role, Major, SchoolClass],
+      host: 'db-mysql-sgp1-smkhu-do-user-13058725-0.b.db.ondigitalocean.com',
+      port: 25060,
+      username: 'doadmin',
+      password: 'AVNS_hTrqzGvEuAyb03GGyFE',
+      database: 'smkhu',
+      entities: [User, Role, Major, SchoolClass, Location],
       synchronize: false, // set false in production,
       autoLoadEntities: true,
     }),
@@ -36,6 +38,7 @@ import { MajorsModule } from './majors/majors.module';
     MenuModule,
     SchoolClassesModule,
     MajorsModule,
+    LocationsModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, UsersService, JwtService],
