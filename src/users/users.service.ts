@@ -31,7 +31,7 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const role = await this.rolesRepository.findOneBy({
-      Id: createUserDto.Role,
+      Code: createUserDto.Role,
     });
     const saltOrRounds = 10;
 
