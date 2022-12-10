@@ -18,6 +18,8 @@ import { SchoolClass } from './schoolclasses/schoolclass.entity';
 import { MajorsModule } from './majors/majors.module';
 import { LocationsModule } from './locations/locations.module';
 import { Location } from './locations/location.entity';
+import { InternshipsModule } from './internships/internships.module';
+import { StatusModule } from './status/status.module';
 
 @Module({
   imports: [
@@ -39,6 +41,8 @@ import { Location } from './locations/location.entity';
     SchoolClassesModule,
     MajorsModule,
     LocationsModule,
+    InternshipsModule,
+    StatusModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, UsersService, JwtService],

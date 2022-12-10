@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+
 @Entity()
-export class Location {
+export class Status {
   @PrimaryGeneratedColumn('uuid')
   Id: string;
 
@@ -9,7 +10,4 @@ export class Location {
 
   @Column()
   Name: string;
-
-  @Column('longtext')
-  Image: string;
 }
