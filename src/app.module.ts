@@ -16,6 +16,10 @@ import { MenuModule } from './menu/menu.module';
 import { Major } from './majors/major.entity';
 import { SchoolClass } from './schoolclasses/schoolclass.entity';
 import { MajorsModule } from './majors/majors.module';
+import { LocationsModule } from './locations/locations.module';
+import { Location } from './locations/location.entity';
+import { InternshipsModule } from './internships/internships.module';
+import { StatusModule } from './status/status.module';
 
 @Module({
   imports: [
@@ -23,19 +27,22 @@ import { MajorsModule } from './majors/majors.module';
     UsersModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'vultr-prod-265558a6-b1b4-48f3-a474-110794166be1-vultr-prod-81ec.vultrdb.com',
-      port: 16751,
-      username: 'vultradmin',
-      password: 'AVNS_eC7HAhH2DjsSC4Vdrs-',
+      host: 'db-mysql-sgp1-smkhu-do-user-13058725-0.b.db.ondigitalocean.com',
+      port: 25060,
+      username: 'doadmin',
+      password: 'AVNS_hTrqzGvEuAyb03GGyFE',
       database: 'smkhu',
-      entities: [User, Role, Major, SchoolClass],
-      synchronize: true, // set false in production,
+      entities: [User, Role, Major, SchoolClass, Location],
+      synchronize: false, // set false in production,
       autoLoadEntities: true,
     }),
     RolesModule,
     MenuModule,
     SchoolClassesModule,
     MajorsModule,
+    LocationsModule,
+    InternshipsModule,
+    StatusModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, UsersService, JwtService],
