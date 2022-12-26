@@ -22,8 +22,8 @@ export class RolesController {
   }
 
   @Get('rolemenu')
-  async getRolemenu(@Request() req: any) {
-    return await this.roleService.findRolemenu(req.user.id);
+  async getRolemenu(@Query() req: any) {
+    return await this.roleService.findRolemenu(req.role);
   }
 
   @Get(':roleId')

@@ -20,6 +20,7 @@ import { LocationsModule } from './locations/locations.module';
 import { Location } from './locations/location.entity';
 import { InternshipsModule } from './internships/internships.module';
 import { StatusModule } from './status/status.module';
+import { JournalsModule } from './journals/journals.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { StatusModule } from './status/status.module';
     LocationsModule,
     InternshipsModule,
     StatusModule,
+    JournalsModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, UsersService, JwtService],

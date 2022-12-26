@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CreateRoleDto } from './Dto/create-role.dto';
 import { Role } from './role.entity';
 
@@ -19,15 +19,17 @@ export class RolesService {
     return this.rolesRepository.findOneBy({ Id: id });
   }
 
-  async findRolemenu(userId: string): Promise<any> {
-    const rolemenus = await this.rolesRepository
-      .createQueryBuilder('role')
-      .leftJoin('role.Users', 'User')
-      .leftJoinAndSelect('role.Menus', 'Menu')
-      .where('User.id = :userId', { userId: userId })
-      .getOne();
+  async findRolemenu(roleId: string): Promise<any> {
+    const rolemenus = await this.rolesRepository.find({
+      where: {
+        Id: roleId,
+      },
+      relations: {
+        Menus: true,
+      },
+    });
 
-    return rolemenus;
+    return rolemenus[0].Menus;
   }
 
   async create(createRoleDto: CreateRoleDto): Promise<Role> {
