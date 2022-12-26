@@ -30,6 +30,9 @@ export class User {
   @Column()
   Password: string;
 
+  @Column()
+  BirthPlace: string;
+
   @ManyToOne(() => Role, (role) => role.Users, { eager: true })
   @JoinColumn({ name: 'Role' })
   Role: Role;
@@ -58,4 +61,7 @@ export class User {
 
   @Column({ default: null, type: 'year' })
   YearEntered: Date;
+
+  @Column({ default: null })
+  BirthDate: Date;
 }

@@ -39,6 +39,8 @@ export class UsersService {
     user.Name = createUserDto.Name;
     user.Age = createUserDto.Age;
     user.YearEntered = createUserDto.YearEntered;
+    user.BirthDate = createUserDto.BirthDate;
+    user.BirthPlace = createUserDto.BirthPlace;
     user.Gender = createUserDto.Gender;
     user.Username = createUserDto.Username;
     user.Password = await bcrypt.hash(createUserDto.Password, saltOrRounds);

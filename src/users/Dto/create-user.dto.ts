@@ -8,4 +8,6 @@ export class CreateUserDto {
   Role: string;
   IsActive: boolean;
   YearEntered: Date;
+  BirthDate: Date;
+  BirthPlace: string;
 }
