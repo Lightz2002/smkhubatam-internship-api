@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './Dto/create-user.dto';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
+import { Public } from 'src/auth/public.decorator';
 
 @Injectable()
 export class UsersService {
@@ -29,6 +30,7 @@ export class UsersService {
     return this.usersRepository.findOneBy({ Username: username });
   }
 
+  @Public()
   async create(createUserDto: CreateUserDto): Promise<User> {
     const role = await this.rolesRepository.findOneBy({
       Code: createUserDto.Role,
@@ -44,6 +46,24 @@ export class UsersService {
     user.Gender = createUserDto.Gender;
     user.Username = createUserDto.Username;
     user.Password = await bcrypt.hash(createUserDto.Password, saltOrRounds);
+    user.Role = role;
+
+    return this.usersRepository.save(user);
+  }
+
+  async update(createUserDto: CreateUserDto, studentId: string): Promise<User> {
+    const user = await this.usersRepository.findOneBy({ Id: studentId });
+    const role = await this.rolesRepository.findOneBy({
+      Code: createUserDto.Role,
+    });
+
+    user.Name = createUserDto.Name;
+    user.Age = createUserDto.Age;
+    user.YearEntered = createUserDto.YearEntered;
+    user.BirthDate = createUserDto.BirthDate;
+    user.BirthPlace = createUserDto.BirthPlace;
+    user.Gender = createUserDto.Gender;
+    user.Username = createUserDto.Username;
     user.Role = role;
 
     return this.usersRepository.save(user);

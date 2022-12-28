@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Body, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './Dto/create-user.dto';
 import { Public } from 'src/auth/public.decorator';
@@ -20,5 +20,10 @@ export class UsersController {
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto) {
     return await this.userService.create(createUserDto);
+  }
+
+  @Put(':userId')
+  async updateUser(@Body() createUserDto: CreateUserDto, userId: string) {
+    return await this.userService.update(createUserDto, userId);
   }
 }
