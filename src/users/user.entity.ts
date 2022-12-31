@@ -30,7 +30,7 @@ export class User {
   @Column()
   Password: string;
 
-  @Column()
+  @Column({ default: null })
   BirthPlace: string;
 
   @ManyToOne(() => Role, (role) => role.Users, { eager: true })
