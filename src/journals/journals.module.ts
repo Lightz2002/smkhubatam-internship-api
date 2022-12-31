@@ -1,9 +1,24 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Location } from 'src/locations/location.entity';
+import { Status } from 'src/status/status.entity';
+import { User } from 'src/users/user.entity';
+import { Journal } from './journal.entity';
 import { JournalsController } from './journals.controller';
 import { JournalsService } from './journals.service';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([Journal, Location, User, Status])],
   controllers: [JournalsController],
-  providers: [JournalsService]
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    JournalsService,
+  ],
+  exports: [TypeOrmModule],
 })
 export class JournalsModule {}

@@ -21,6 +21,7 @@ import { Location } from './locations/location.entity';
 import { InternshipsModule } from './internships/internships.module';
 import { StatusModule } from './status/status.module';
 import { JournalsModule } from './journals/journals.module';
+import { Journal } from './journals/journal.entity';
 
 @Module({
   imports: [
@@ -33,7 +34,7 @@ import { JournalsModule } from './journals/journals.module';
       username: 'doadmin',
       password: 'AVNS_hTrqzGvEuAyb03GGyFE',
       database: 'smkhu',
-      entities: [User, Role, Major, SchoolClass, Location],
+      entities: [User, Role, Major, SchoolClass, Location, Journal],
       synchronize: false, // set false in production,
       autoLoadEntities: true,
     }),

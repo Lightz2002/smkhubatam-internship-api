@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Journal } from 'src/journals/journal.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 @Entity()
 export class Location {
   @PrimaryGeneratedColumn('uuid')
@@ -12,4 +13,7 @@ export class Location {
 
   @Column('longtext')
   Image: string;
+
+  @OneToMany(() => Journal, (journal) => journal.Location)
+  Journals: Journal[]
 }
