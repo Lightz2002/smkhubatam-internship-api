@@ -21,6 +21,18 @@ export class JournalsController {
     return await this.journalService.create(createJournalDto);
   }
 
+  @Post('/:journalId')
+  async updateJournal(
+    @Param('journalId') journalId,
+    @Body() createJournalDto: CreateJournalDto,
+  ) {
+    return await this.journalService.updateStatus(
+      journalId,
+      createJournalDto.Status,
+      createJournalDto.Note,
+    );
+  }
+
   @Delete(':journalId')
   async remote(@Param('journalId') journalId) {
     return await this.journalService.remove(journalId);

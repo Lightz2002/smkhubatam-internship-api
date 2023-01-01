@@ -56,6 +56,20 @@ export class JournalsService {
     return this.journalRepository.save(journal);
   }
 
+  async updateStatus(
+    id: string,
+    status: string,
+    note: string,
+  ): Promise<Journal> {
+    const journal = await this.journalRepository.findOneBy({ Id: id });
+    const newStatus = await this.statusRepository.findOneBy({ Code: status });
+
+    journal.Status = newStatus;
+    journal.Note = note;
+
+    return this.journalRepository.save(journal);
+  }
+
   async remove(id: string): Promise<void> {
     await this.journalRepository.delete(id);
   }
