@@ -36,7 +36,11 @@ export class UsersService {
       Username: createUserDto.Username,
     });
 
-    if (userExist !== null) throw new HttpException('Username already exist!', HttpStatus.NOT_ACCEPTABLE);
+    if (userExist !== null)
+      throw new HttpException(
+        'Username already exist!',
+        HttpStatus.NOT_ACCEPTABLE,
+      );
 
     const role = await this.rolesRepository.findOneBy({
       Code: createUserDto.Role,
