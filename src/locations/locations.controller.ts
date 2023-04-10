@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Body, Param } from '@nestjs/common';
 import { LocationsService } from './locations.service';
 import { CreateLocationDto } from './Dto/create-location.dto';
 
@@ -19,5 +19,13 @@ export class LocationsController {
   @Post()
   async createLocation(@Body() createLocationDto: CreateLocationDto) {
     return await this.locationService.create(createLocationDto);
+  }
+
+  @Put(':locationId')
+  async updateLocation(
+    @Body() createLocationDto: CreateLocationDto,
+    @Param('locationId') locationId,
+  ) {
+    return await this.locationService.update(createLocationDto, locationId);
   }
 }

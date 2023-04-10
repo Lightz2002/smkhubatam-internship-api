@@ -27,4 +27,20 @@ export class LocationsService {
 
     return this.locationRepository.save(location);
   }
+
+  async update(
+    createLocationDto: CreateLocationDto,
+    locationId: string,
+  ): Promise<Location> {
+    console.log(locationId);
+    const location = await this.locationRepository.findOneBy({
+      Id: locationId,
+    });
+
+    location.Code = createLocationDto.Code;
+    location.Name = createLocationDto.Name;
+    location.Image = createLocationDto.Image;
+
+    return this.locationRepository.save(location);
+  }
 }
