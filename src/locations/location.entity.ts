@@ -11,7 +11,7 @@ export class Location {
   @Column()
   Name: string;
 
-  @Column('longtext')
+  @Column({default: null, type: 'longtext'})
   Image: string;
 
   @OneToMany(() => Journal, (journal) => journal.Location)
