@@ -43,7 +43,7 @@ export class UsersService {
       );
 
     const role = await this.rolesRepository.findOneBy({
-      Code: createUserDto.Role,
+      Id: createUserDto.Role,
     });
     const saltOrRounds = 10;
     const yearNow = new Date().getFullYear();
@@ -51,10 +51,7 @@ export class UsersService {
 
     const user = new User();
     user.Name = createUserDto.Name;
-    user.Age = yearNow - birthYear; // createUserDto.Age;
-    user.YearEntered = createUserDto.YearEntered;
-    user.BirthDate = createUserDto.BirthDate;
-    user.BirthPlace = createUserDto.BirthPlace;
+
     user.Gender = createUserDto.Gender;
     user.Username = createUserDto.Username;
     user.Password = await bcrypt.hash(createUserDto.Password, saltOrRounds);
@@ -66,7 +63,7 @@ export class UsersService {
   async update(createUserDto: CreateUserDto, studentId: string): Promise<User> {
     const user = await this.usersRepository.findOneBy({ Id: studentId });
     const role = await this.rolesRepository.findOneBy({
-      Code: createUserDto.Role,
+      Id: createUserDto.Role,
     });
 
     user.Name = createUserDto.Name;
@@ -76,6 +73,7 @@ export class UsersService {
     user.BirthPlace = createUserDto.BirthPlace;
     user.Gender = createUserDto.Gender;
     user.Username = createUserDto.Username;
+    user.Image = createUserDto.Image;
     user.Role = role;
 
     return this.usersRepository.save(user);

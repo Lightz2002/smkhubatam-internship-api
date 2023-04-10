@@ -24,7 +24,7 @@ export class User {
   @Column()
   Gender: string;
 
-  @Column()
+  @Column({ default: null })
   Age: number;
 
   @Column()
@@ -62,6 +62,9 @@ export class User {
   @Column({ default: null, type: 'year' })
   YearEntered: Date;
 
-  @Column({ default: null })
+  @Column({ default: null, type: 'date' })
   BirthDate: Date;
+
+  @Column({ default: null, type: 'longtext' })
+  Image: string;
 }

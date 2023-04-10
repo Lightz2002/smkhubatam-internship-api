@@ -3,6 +3,7 @@ export class CreateUserDto {
   Name: string;
   Age: number;
   Gender: string;
+  Image: string;
   Username: string;
   Password: string;
   Role: string;
@@ -10,4 +11,5 @@ export class CreateUserDto {
   YearEntered: Date;
   BirthDate: Date;
   BirthPlace: string;
+  Location: string;
 }
