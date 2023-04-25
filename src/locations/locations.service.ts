@@ -32,7 +32,6 @@ export class LocationsService {
     createLocationDto: CreateLocationDto,
     locationId: string,
   ): Promise<Location> {
-    console.log(locationId);
     const location = await this.locationRepository.findOneBy({
       Id: locationId,
     });
