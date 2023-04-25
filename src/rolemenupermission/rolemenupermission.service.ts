@@ -19,10 +19,10 @@ export class RolemenupermissionService {
   ) {}
 
   async findOne(request): Promise<RolemenuPermission> {
-    const user = await this.userRepository.findOneBy({ Id: request.user.id});
+    const user = await this.userRepository.findOneBy({ Id: request.user.Id });
     // const menu = await this.menuRepository.find();
-    console.log(user.Role);
+    return null;
 
-    return this.rolemenuPermissionRepository.findOneBy({ Role: user.Role });
+    // return this.rolemenuPermissionRepository.findOneBy({ Role: user.Role });
   }
 }
