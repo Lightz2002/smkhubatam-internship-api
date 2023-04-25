@@ -17,7 +17,10 @@ export class SchoolClass {
   Id: string;
 
   @Column()
-  Code: string;
+  Code: number;
+
+  @Column()
+  StudentCount: number;
 
   @Column({ default: true })
   IsActive: boolean;
@@ -41,4 +44,7 @@ export class SchoolClass {
   @ManyToOne(() => Major, (major) => major.SchoolClasses, { eager: true })
   @JoinColumn({ name: 'Major' })
   Major: Major;
+
+  @Column({ default: null, type: 'year' })
+  Year: Date;
 }
