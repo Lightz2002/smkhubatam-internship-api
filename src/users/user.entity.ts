@@ -6,12 +6,13 @@ import {
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  BaseEntity,
 } from 'typeorm';
 import { Role } from 'src/roles/role.entity';
 import { SchoolClass } from 'src/schoolclasses/schoolclass.entity';
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   Id: string;
 
