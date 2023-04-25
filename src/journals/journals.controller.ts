@@ -1,14 +1,38 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateJournalDto } from './Dto/create-journal.dto';
 import { JournalsService } from './journals.service';
+import { CurrentUser } from '../users/decorators/current-user.decorator';
+import { AuthGuard } from '@nestjs/passport';
+import { User } from '../users/user.entity';
 
 @Controller('journals')
 export class JournalsController {
   constructor(private journalService: JournalsService) {}
 
   @Get()
-  async getJournals() {
-    return await this.journalService.findAll();
+  @UseGuards(AuthGuard('jwt'))
+  async getJournals(@CurrentUser() user: User) {
+    const conditions = {
+      where: {},
+    };
+
+    if (user?.Role?.Name?.toLowerCase() === 'student') {
+      conditions.where = {
+        Student: {
+          Id: user?.Id,
+        },
+      };
+    }
+
+    return await this.journalService.findAll(conditions);
   }
 
   @Get(':journalId')

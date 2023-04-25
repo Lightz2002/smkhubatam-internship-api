@@ -23,8 +23,9 @@ export class JournalsService {
     private statusRepository: Repository<Status>,
   ) {}
 
-  findAll(): Promise<Journal[]> {
-    return this.journalRepository.find();
+  findAll(conditions: object): Promise<Journal[]> {
+    console.log(conditions);
+    return this.journalRepository.find(conditions);
   }
 
   findOne(id: string): Promise<Journal> {
@@ -33,7 +34,7 @@ export class JournalsService {
 
   async create(createJournalDto: CreateJournalDto): Promise<Journal> {
     const user = await this.userRepository.findOneBy({
-      Username: createJournalDto.User,
+      Username: createJournalDto.Student,
     });
 
     const status = await this.statusRepository.findOneBy({
@@ -50,7 +51,7 @@ export class JournalsService {
     journal.AbsenceNote = createJournalDto.AbsenceNote;
     journal.Note = createJournalDto.Note;
     journal.Status = status;
-    journal.User = user;
+    journal.Student = user;
     journal.Location = location;
 
     return this.journalRepository.save(journal);

@@ -5,6 +5,6 @@ export class CreateJournalDto {
   AbsenceNote: string;
   Note: string;
   Status: string;
-  User: string;
+  Student: string;
   Location: string;
 }

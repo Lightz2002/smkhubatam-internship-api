@@ -27,13 +27,13 @@ export class Journal {
   @Column('longtext')
   Note: string;
 
-  @OneToOne(() => Status)
-  @JoinColumn({ name: 'Status'})
+  @ManyToOne(() => Status, { eager: true })
+  @JoinColumn({ name: 'Status' })
   Status: Status;
 
-  @OneToOne(() => User)
-  @JoinColumn({ name: 'User'})
-  User: User;
+  @ManyToOne(() => User, { eager: true })
+  @JoinColumn({ name: 'Student' })
+  Student: User;
 
   @ManyToOne(() => Location, (location) => location.Journals, { eager: true })
   @JoinColumn({ name: 'Location' })
