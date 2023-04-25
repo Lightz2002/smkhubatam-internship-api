@@ -3,6 +3,7 @@ export class CreateInternshipDto {
   Year: Date;
   Student: string;
   Location: string;
-  Mentor: string;
+  FieldMentor: string;
+  SchoolMentor: string;
   Status: string;
 }

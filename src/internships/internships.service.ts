@@ -24,7 +24,11 @@ export class InternshipsService {
   ) {}
 
   findAll(): Promise<Internship[]> {
-    return this.internshipRepository.find();
+    return this.internshipRepository.find({
+      order: {
+        Created_at: 'DESC',
+      },
+    });
   }
 
   findOne(id: string): Promise<Internship> {
@@ -33,26 +37,68 @@ export class InternshipsService {
 
   async create(createInternshipDto: CreateInternshipDto): Promise<Internship> {
     const student = await this.userRepository.findOneBy({
-      Username: createInternshipDto.Student,
+      Id: createInternshipDto.Student,
     });
 
     const location = await this.locationRepository.findOneBy({
-      Code: createInternshipDto.Location,
+      Id: createInternshipDto.Location,
     });
 
-    const mentor = await this.userRepository.findOneBy({
-      Username: createInternshipDto.Mentor,
+    const fieldMentor = await this.userRepository.findOneBy({
+      Id: createInternshipDto.FieldMentor,
+    });
+
+    const schoolMentor = await this.userRepository.findOneBy({
+      Id: createInternshipDto.SchoolMentor,
     });
 
     const status = await this.statusRepository.findOneBy({
-      Code: createInternshipDto.Status,
+      Code: 'entry',
     });
 
     const internship = new Internship();
     internship.Year = createInternshipDto.Year;
     internship.Student = student;
     internship.Location = location;
-    internship.Mentor = mentor;
+    internship.FieldMentor = fieldMentor;
+    internship.SchoolMentor = schoolMentor;
+    internship.Status = status;
+
+    return this.internshipRepository.save(internship);
+  }
+
+  async update(
+    createInternshipDto: CreateInternshipDto,
+    internshipId: string,
+  ): Promise<Internship> {
+    const student = await this.userRepository.findOneBy({
+      Id: createInternshipDto.Student,
+    });
+
+    const location = await this.locationRepository.findOneBy({
+      Id: createInternshipDto.Location,
+    });
+
+    const fieldMentor = await this.userRepository.findOneBy({
+      Id: createInternshipDto.FieldMentor,
+    });
+
+    const schoolMentor = await this.userRepository.findOneBy({
+      Id: createInternshipDto.SchoolMentor,
+    });
+
+    const status = await this.statusRepository.findOneBy({
+      Code: 'entry',
+    });
+
+    const internship = await this.internshipRepository.findOneBy({
+      Id: internshipId,
+    });
+    internship.Year = createInternshipDto.Year;
+    internship.Student = student;
+    internship.Location = location;
+    internship.FieldMentor = fieldMentor;
+    internship.SchoolMentor = schoolMentor;
     internship.Status = status;
 
     return this.internshipRepository.save(internship);

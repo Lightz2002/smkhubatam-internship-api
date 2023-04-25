@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { CreateInternshipDto } from './Dto/create-internship.dto';
 import { InternshipsService } from './internships.service';
 
@@ -24,5 +32,16 @@ export class InternshipsController {
   @Delete(':internshipId')
   async remove(@Param('internshipId') internshipId) {
     return await this.internshipService.remove(internshipId);
+  }
+
+  @Put(':internshipId')
+  async updateInternship(
+    @Body() createInternshipDto: CreateInternshipDto,
+    @Param('internshipId') internshipId,
+  ) {
+    return await this.internshipService.update(
+      createInternshipDto,
+      internshipId,
+    );
   }
 }

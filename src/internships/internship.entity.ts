@@ -6,7 +6,10 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToOne,
+  ManyToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -17,19 +20,36 @@ export class Internship {
   @Column({ default: null, type: 'year' })
   Year: Date;
 
-  @OneToOne(() => User)
-  @JoinColumn({ name: 'Student'})
+  @ManyToOne(() => User, { eager: true })
+  @JoinColumn({ name: 'Student' })
   Student: User;
 
-  @OneToOne(() => Location)
-  @JoinColumn({ name: 'Location'})
+  @ManyToOne(() => Location, { eager: true })
+  @JoinColumn({ name: 'Location' })
   Location: Location;
 
-  @OneToOne(() => User)
-  @JoinColumn({ name: 'Mentor'})
-  Mentor: User;
+  @ManyToOne(() => User, { eager: true })
+  @JoinColumn({ name: 'FieldMentor' })
+  FieldMentor: User;
 
-  @OneToOne(() => Status)
-  @JoinColumn({ name: 'Status'})
+  @ManyToOne(() => User, { eager: true })
+  @JoinColumn({ name: 'SchoolMentor' })
+  SchoolMentor: User;
+
+  @ManyToOne(() => Status, { eager: true })
+  @JoinColumn({ name: 'Status' })
   Status: Status;
+
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  Created_at: Date;
+
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
+  Updated_at: Date;
 }
