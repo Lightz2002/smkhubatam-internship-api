@@ -1,6 +1,6 @@
 export class CreateJournalDto {
   Id: string;
-  Date: Date;
+  Date: string;
   Absence: string;
   AbsenceNote: string;
   Note: string;

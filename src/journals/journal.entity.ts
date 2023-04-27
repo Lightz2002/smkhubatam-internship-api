@@ -8,6 +8,7 @@ import {
   JoinColumn,
   OneToOne,
   ManyToOne,
+  CreateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -15,8 +16,8 @@ export class Journal {
   @PrimaryGeneratedColumn('uuid')
   Id: string;
 
-  @Column()
-  Date: Date;
+  @Column({ type: 'date' })
+  Date: string;
 
   @Column()
   Absence: string;
