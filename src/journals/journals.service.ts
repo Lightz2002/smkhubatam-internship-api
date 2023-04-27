@@ -129,7 +129,6 @@ export class JournalsService {
     const newStatus = await this.statusRepository.findOneBy({ Code: status });
 
     journal.Status = newStatus;
-    journal.Note = note;
 
     return this.journalRepository.save(journal);
   }

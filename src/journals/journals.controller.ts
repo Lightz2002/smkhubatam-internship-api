@@ -57,8 +57,15 @@ export class JournalsController {
     return await this.journalService.updateStatus(
       journalId,
       createJournalDto.Status,
-      createJournalDto.Note,
     );
+  }
+
+  @Put('/:journalId')
+  async update(
+    @Param('journalId') journalId,
+    @Body() createJournalDto: CreateJournalDto,
+  ) {
+    return await this.journalService.update(createJournalDto, journalId);
   }
 
   @Delete(':journalId')
