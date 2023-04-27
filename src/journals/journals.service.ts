@@ -82,11 +82,49 @@ export class JournalsService {
     return this.journalRepository.save(journal);
   }
 
-  async updateStatus(
-    id: string,
-    status: string,
-    note: string,
+  async update(
+    createJournalDto: CreateJournalDto,
+    journalId: string,
   ): Promise<Journal> {
+    const student = await this.userRepository.findOneBy({
+      Id: createJournalDto.Student,
+    });
+
+    const journalExist = await this.journalRepository.find({
+      where: {
+        Id: Not(Equal(journalId)),
+        Date: createJournalDto.Date,
+        Student: {
+          Id: student.Id,
+        },
+      },
+      relations: {
+        Student: true,
+      },
+    });
+
+    if (journalExist.length > 0) {
+      throw new HttpException(
+        `Journal for ${moment(createJournalDto.Date).format(
+          'DD MMMM YYYY',
+        )} already exist!`,
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+
+    const journal = await this.journalRepository.findOneBy({
+      Id: journalId,
+    });
+
+    journal.Date = createJournalDto.Date;
+    journal.Absence = createJournalDto.Absence;
+    journal.AbsenceNote = createJournalDto.AbsenceNote;
+    journal.Status = journal.Status;
+
+    return this.journalRepository.save(journal);
+  }
+
+  async updateStatus(id: string, status: string): Promise<Journal> {
     const journal = await this.journalRepository.findOneBy({ Id: id });
     const newStatus = await this.statusRepository.findOneBy({ Code: status });
 

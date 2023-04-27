@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Body,
   Param,
   Delete,
@@ -41,12 +42,15 @@ export class JournalsController {
   }
 
   @Post()
-  async createJournal(@Body() createJournalDto: CreateJournalDto) {
-    return await this.journalService.create(createJournalDto);
+  async createJournal(
+    @Body() createJournalDto: CreateJournalDto,
+    @CurrentUser() currentUser: User,
+  ) {
+    return await this.journalService.create(createJournalDto, currentUser);
   }
 
-  @Post('/:journalId')
-  async updateJournal(
+  @Put('/:journalId/status')
+  async updateStatus(
     @Param('journalId') journalId,
     @Body() createJournalDto: CreateJournalDto,
   ) {
