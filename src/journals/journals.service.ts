@@ -1,11 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Location } from 'src/locations/location.entity';
 import { Status } from 'src/status/status.entity';
 import { User } from 'src/users/user.entity';
-import { Repository } from 'typeorm';
+import { Equal, Not, Repository } from 'typeorm';
 import { CreateJournalDto } from './Dto/create-journal.dto';
 import { Journal } from './journal.entity';
+import { CurrentUser } from 'src/users/decorators/current-user.decorator';
+import * as moment from 'moment';
 
 @Injectable()
 export class JournalsService {
@@ -24,7 +26,6 @@ export class JournalsService {
   ) {}
 
   findAll(conditions: object): Promise<Journal[]> {
-    console.log(conditions);
     return this.journalRepository.find(conditions);
   }
 
@@ -32,10 +33,34 @@ export class JournalsService {
     return this.journalRepository.findOneBy({ Id: id });
   }
 
-  async create(createJournalDto: CreateJournalDto): Promise<Journal> {
-    const user = await this.userRepository.findOneBy({
-      Username: createJournalDto.Student,
+  async create(
+    createJournalDto: CreateJournalDto,
+    @CurrentUser() currentUser: User,
+  ): Promise<Journal> {
+    const student = await this.userRepository.findOneBy({
+      Id: createJournalDto.Student,
     });
+
+    const journalExist = await this.journalRepository.find({
+      where: {
+        Date: createJournalDto.Date,
+        Student: {
+          Id: student.Id,
+        },
+      },
+      relations: {
+        Student: true,
+      },
+    });
+
+    if (journalExist.length > 0) {
+      throw new HttpException(
+        `Journal for ${moment(createJournalDto.Date).format(
+          'DD MMMM YYYY',
+        )} already exist!`,
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
 
     const status = await this.statusRepository.findOneBy({
       Code: 'verifying',
@@ -51,7 +76,7 @@ export class JournalsService {
     journal.AbsenceNote = createJournalDto.AbsenceNote;
     journal.Note = createJournalDto.Note;
     journal.Status = status;
-    journal.Student = user;
+    journal.Student = student;
     journal.Location = location;
 
     return this.journalRepository.save(journal);
