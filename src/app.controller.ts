@@ -23,6 +23,6 @@ export class AppController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
-    return this.userService.findOne(req.user.id);
+    return this.userService.findOne(req.user.Id);
   }
 }
