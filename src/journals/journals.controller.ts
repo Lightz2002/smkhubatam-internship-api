@@ -1,3 +1,4 @@
+import { InternshipsService } from './../internships/internships.service';
 import {
   Controller,
   Get,
@@ -16,7 +17,10 @@ import { User } from '../users/user.entity';
 
 @Controller('journals')
 export class JournalsController {
-  constructor(private journalService: JournalsService) {}
+  constructor(
+    private journalService: JournalsService,
+    private internshipsService: InternshipsService,
+  ) {}
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
@@ -38,7 +42,14 @@ export class JournalsController {
 
   @Get(':journalId')
   async getJournal(@Param('journalId') journalId) {
-    return await this.journalService.findOne(journalId);
+    const journal = await this.journalService.findOne(journalId);
+    const internship = await this.internshipsService.findOneByStudent(
+      journal.Student.Id,
+    );
+    return {
+      ...journal,
+      Internship: internship,
+    };
   }
 
   @Post()

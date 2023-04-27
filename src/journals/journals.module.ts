@@ -8,9 +8,13 @@ import { User } from 'src/users/user.entity';
 import { Journal } from './journal.entity';
 import { JournalsController } from './journals.controller';
 import { JournalsService } from './journals.service';
+import { Internship } from 'src/internships/internship.entity';
+import { InternshipsService } from 'src/internships/internships.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Journal, Location, User, Status])],
+  imports: [
+    TypeOrmModule.forFeature([Journal, Location, User, Status, Internship]),
+  ],
   controllers: [JournalsController],
   providers: [
     {
@@ -18,6 +22,7 @@ import { JournalsService } from './journals.service';
       useClass: JwtAuthGuard,
     },
     JournalsService,
+    InternshipsService,
   ],
   exports: [TypeOrmModule],
 })

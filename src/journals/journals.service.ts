@@ -8,6 +8,7 @@ import { CreateJournalDto } from './Dto/create-journal.dto';
 import { Journal } from './journal.entity';
 import { CurrentUser } from 'src/users/decorators/current-user.decorator';
 import * as moment from 'moment';
+import { Internship } from 'src/internships/internship.entity';
 
 @Injectable()
 export class JournalsService {
@@ -23,6 +24,9 @@ export class JournalsService {
 
     @InjectRepository(Status)
     private statusRepository: Repository<Status>,
+
+    @InjectRepository(Status)
+    private internshipRepository: Repository<Internship>,
   ) {}
 
   findAll(conditions: object): Promise<Journal[]> {
@@ -66,9 +70,21 @@ export class JournalsService {
       Code: 'verifying',
     });
 
-    const location = await this.locationRepository.findOneBy({
-      Code: createJournalDto.Location,
+    const internship = await this.internshipRepository.find({
+      where: {
+        Student: {
+          Id: student.Id,
+        },
+      },
+      relations: { Student: true },
     });
+
+    if (internship.length === 0) {
+      throw new HttpException(
+        `You haven't been assigned an internship`,
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
 
     const journal = new Journal();
     journal.Date = createJournalDto.Date;
@@ -77,7 +93,6 @@ export class JournalsService {
     journal.Note = createJournalDto.Note;
     journal.Status = status;
     journal.Student = student;
-    journal.Location = location;
 
     return this.journalRepository.save(journal);
   }
@@ -119,7 +134,6 @@ export class JournalsService {
     journal.Date = createJournalDto.Date;
     journal.Absence = createJournalDto.Absence;
     journal.AbsenceNote = createJournalDto.AbsenceNote;
-    journal.Status = journal.Status;
 
     return this.journalRepository.save(journal);
   }

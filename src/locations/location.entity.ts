@@ -1,4 +1,4 @@
-import { Journal } from 'src/journals/journal.entity';
+import { Internship } from './../internships/internship.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 @Entity()
 export class Location {
@@ -11,9 +11,9 @@ export class Location {
   @Column()
   Name: string;
 
-  @Column({default: null, type: 'longtext'})
+  @Column({ default: null, type: 'longtext' })
   Image: string;
 
-  @OneToMany(() => Journal, (journal) => journal.Location)
-  Journals: Journal[]
+  @OneToMany(() => Internship, (internship) => internship.Location)
+  Internships: Internship[];
 }

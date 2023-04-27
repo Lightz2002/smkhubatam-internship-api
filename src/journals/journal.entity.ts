@@ -35,8 +35,4 @@ export class Journal {
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'Student' })
   Student: User;
-
-  @ManyToOne(() => Location, (location) => location.Journals, { eager: true })
-  @JoinColumn({ name: 'Location' })
-  Location: Location;
 }

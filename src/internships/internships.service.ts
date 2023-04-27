@@ -35,6 +35,14 @@ export class InternshipsService {
     return this.internshipRepository.findOneBy({ Id: id });
   }
 
+  findOneByStudent(studentId: string): Promise<Internship> {
+    return this.internshipRepository.findOneBy({
+      Student: {
+        Id: studentId,
+      },
+    });
+  }
+
   async create(createInternshipDto: CreateInternshipDto): Promise<Internship> {
     const student = await this.userRepository.findOneBy({
       Id: createInternshipDto.Student,
