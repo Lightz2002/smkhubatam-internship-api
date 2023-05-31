@@ -19,13 +19,10 @@ export class JournalsService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
 
-    @InjectRepository(Location)
-    private locationRepository: Repository<Location>,
-
     @InjectRepository(Status)
     private statusRepository: Repository<Status>,
 
-    @InjectRepository(Status)
+    @InjectRepository(Internship)
     private internshipRepository: Repository<Internship>,
   ) {}
 
@@ -41,15 +38,11 @@ export class JournalsService {
     createJournalDto: CreateJournalDto,
     @CurrentUser() currentUser: User,
   ): Promise<Journal> {
-    const student = await this.userRepository.findOneBy({
-      Id: createJournalDto.Student,
-    });
-
     const journalExist = await this.journalRepository.find({
       where: {
         Date: createJournalDto.Date,
         Student: {
-          Id: student.Id,
+          Id: currentUser.Id,
         },
       },
       relations: {
@@ -73,7 +66,7 @@ export class JournalsService {
     const internship = await this.internshipRepository.find({
       where: {
         Student: {
-          Id: student.Id,
+          Id: currentUser.Id,
         },
       },
       relations: { Student: true },
@@ -92,7 +85,7 @@ export class JournalsService {
     journal.AbsenceNote = createJournalDto.AbsenceNote;
     journal.Note = createJournalDto.Note;
     journal.Status = status;
-    journal.Student = student;
+    journal.Student = currentUser;
 
     return this.journalRepository.save(journal);
   }
