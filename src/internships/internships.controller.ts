@@ -29,6 +29,17 @@ export class InternshipsController {
     return await this.internshipService.create(createInternshipDto);
   }
 
+  @Put('/:internshipId/status')
+  async updateStatus(
+    @Param('internshipId') internshipId,
+    @Body() createInternshipDto: CreateInternshipDto,
+  ) {
+    return await this.internshipService.updateStatus(
+      internshipId,
+      createInternshipDto.Status,
+    );
+  }
+
   @Delete(':internshipId')
   async remove(@Param('internshipId') internshipId) {
     return await this.internshipService.remove(internshipId);

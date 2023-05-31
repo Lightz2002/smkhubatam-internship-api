@@ -112,6 +112,15 @@ export class InternshipsService {
     return this.internshipRepository.save(internship);
   }
 
+  async updateStatus(id: string, status: string): Promise<Internship> {
+    const internship = await this.internshipRepository.findOneBy({ Id: id });
+    const newStatus = await this.statusRepository.findOneBy({ Code: status });
+
+    internship.Status = newStatus;
+
+    return this.internshipRepository.save(internship);
+  }
+
   async remove(id: string): Promise<void> {
     await this.internshipRepository.delete(id);
   }
