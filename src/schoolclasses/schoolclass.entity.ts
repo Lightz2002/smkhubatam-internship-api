@@ -19,7 +19,7 @@ export class SchoolClass {
   @Column()
   Code: number;
 
-  @Column()
+  @Column({ default: 0 })
   StudentCount: number;
 
   @Column({ default: true })

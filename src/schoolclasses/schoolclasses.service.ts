@@ -34,6 +34,7 @@ export class SchoolClassesService {
 
     schoolClass.Code = createSchoolClassDto.Code;
     schoolClass.IsActive = createSchoolClassDto.IsActive;
+    schoolClass.StudentCount = createSchoolClassDto.StudentCount;
     schoolClass.Year = createSchoolClassDto.Year;
     schoolClass.Major = major;
 
@@ -54,6 +55,7 @@ export class SchoolClassesService {
 
     schoolClass.Code = createSchoolClassDto.Code;
     schoolClass.IsActive = createSchoolClassDto.IsActive;
+    schoolClass.StudentCount = createSchoolClassDto.StudentCount;
     schoolClass.Year = createSchoolClassDto.Year;
     schoolClass.Major = major;
 
