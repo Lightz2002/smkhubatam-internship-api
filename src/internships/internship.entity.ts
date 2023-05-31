@@ -20,7 +20,7 @@ export class Internship {
   @Column({ default: null, type: 'year' })
   Year: Date;
 
-  @ManyToOne(() => User, { eager: true })
+  @OneToOne(() => User, { eager: true })
   @JoinColumn({ name: 'Student' })
   Student: User;
 

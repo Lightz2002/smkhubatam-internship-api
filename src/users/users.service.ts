@@ -23,7 +23,12 @@ export class UsersService {
   }
 
   findOne(id: string): Promise<User> {
-    return this.usersRepository.findOneBy({ Id: id });
+    return this.usersRepository.findOne({
+      where: { Id: id },
+      relations: {
+        Internship: true,
+      },
+    });
   }
 
   findByUsername(username: string): Promise<User> {

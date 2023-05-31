@@ -12,4 +12,5 @@ export class CreateUserDto {
   BirthDate: Date;
   BirthPlace: string;
   Location: string;
+  Internship: string;
 }
