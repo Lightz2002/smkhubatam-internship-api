@@ -6,9 +6,10 @@ import { UsersController } from './users.controller';
 import { Role } from 'src/roles/role.entity';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { SchoolClass } from 'src/schoolclasses/schoolclass.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Role])],
+  imports: [TypeOrmModule.forFeature([User, Role, SchoolClass])],
   providers: [
     {
       provide: APP_GUARD,

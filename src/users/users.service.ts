@@ -1,3 +1,4 @@
+import { SchoolClass } from './../schoolclasses/schoolclass.entity';
 /* eslint-disable prettier/prettier */
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -16,6 +17,9 @@ export class UsersService {
 
     @InjectRepository(Role)
     private rolesRepository: Repository<Role>,
+
+    @InjectRepository(SchoolClass)
+    private schoolClassesRepository: Repository<SchoolClass>,
   ) {}
 
   findAll(): Promise<User[]> {
@@ -27,6 +31,7 @@ export class UsersService {
       where: { Id: id },
       relations: {
         Internship: true,
+        SchoolClass: true,
       },
     });
   }
@@ -71,6 +76,10 @@ export class UsersService {
       Id: createUserDto.Role,
     });
 
+    const schoolClass = await this.schoolClassesRepository.findOneBy({
+      Id: createUserDto.SchoolClass,
+    });
+
     user.Name = createUserDto.Name;
     user.Age = createUserDto.Age;
     user.YearEntered = createUserDto.YearEntered;
@@ -80,6 +89,7 @@ export class UsersService {
     user.Username = createUserDto.Username;
     user.Image = createUserDto.Image;
     user.Role = role;
+    user.SchoolClass = schoolClass;
 
     return this.usersRepository.save(user);
   }
