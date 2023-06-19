@@ -22,6 +22,10 @@ import { InternshipsModule } from './internships/internships.module';
 import { StatusModule } from './status/status.module';
 import { JournalsModule } from './journals/journals.module';
 import { Journal } from './journals/journal.entity';
+import { Folder } from './folders/folder.entity';
+import { File } from './files/file.entity';
+import { FilesModule } from './files/files.module';
+import { FoldersModule } from './folders/folder.module';
 
 @Module({
   imports: [
@@ -29,12 +33,21 @@ import { Journal } from './journals/journal.entity';
     UsersModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'db-mysql-sgp1-smkhu-do-user-13058725-0.b.db.ondigitalocean.com',
-      port: 25060,
-      username: 'doadmin',
-      password: 'AVNS_hTrqzGvEuAyb03GGyFE',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'Lkdeiwj@9012',
       database: 'smkhu',
-      entities: [User, Role, Major, SchoolClass, Location, Journal],
+      entities: [
+        User,
+        Role,
+        Major,
+        SchoolClass,
+        Location,
+        Journal,
+        File,
+        Folder,
+      ],
       synchronize: false, // set false in production,
       autoLoadEntities: true,
     }),
@@ -46,6 +59,8 @@ import { Journal } from './journals/journal.entity';
     InternshipsModule,
     StatusModule,
     JournalsModule,
+    FilesModule,
+    FoldersModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, UsersService, JwtService],
