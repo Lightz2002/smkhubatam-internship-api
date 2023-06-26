@@ -72,9 +72,6 @@ export class InternshipsService {
     internship.SchoolMentor = schoolMentor;
     internship.Status = status;
 
-    student.Internship = internship;
-    this.userRepository.save(student);
-
     return this.internshipRepository.save(internship);
   }
 
@@ -111,9 +108,6 @@ export class InternshipsService {
     internship.FieldMentor = fieldMentor;
     internship.SchoolMentor = schoolMentor;
     internship.Status = status;
-
-    student.Internship = internship;
-    this.userRepository.save(student);
 
     return this.internshipRepository.save(internship);
   }
