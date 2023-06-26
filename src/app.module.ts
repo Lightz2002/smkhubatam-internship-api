@@ -26,30 +26,36 @@ import { Folder } from './folders/folder.entity';
 import { File } from './files/file.entity';
 import { FilesModule } from './files/files.module';
 import { FoldersModule } from './folders/folder.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     AuthModule,
     UsersModule,
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'Lkdeiwj@9012',
-      database: 'smkhu',
-      entities: [
-        User,
-        Role,
-        Major,
-        SchoolClass,
-        Location,
-        Journal,
-        File,
-        Folder,
-      ],
-      synchronize: false, // set false in production,
-      autoLoadEntities: true,
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule], // Add ConfigModule to the imports array
+      useFactory: (configService: ConfigService) => ({
+        type: 'mysql',
+        host: configService.get('DB_HOST'),
+        port: +configService.get('DB_PORT'),
+        username: configService.get('DB_USERNAME'),
+        password: configService.get('DB_PASSWORD'),
+        database: 'smkhu',
+        entities: [
+          User,
+          Role,
+          Major,
+          SchoolClass,
+          Location,
+          Journal,
+          File,
+          Folder,
+        ],
+        synchronize: false, // set false in production,
+        autoLoadEntities: true,
+      }),
+      inject: [ConfigService],
     }),
     RolesModule,
     MenuModule,
