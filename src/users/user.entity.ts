@@ -12,7 +12,6 @@ import {
 } from 'typeorm';
 import { Role } from 'src/roles/role.entity';
 import { SchoolClass } from 'src/schoolclasses/schoolclass.entity';
-import { Internship } from 'src/internships/internship.entity';
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -71,8 +70,8 @@ export class User extends BaseEntity {
   @Column({ default: null, type: 'longtext' })
   Image: string;
 
-  @Exclude()
-  @OneToOne(() => Internship, (internship) => internship.Student)
-  @JoinColumn({ name: 'InternshipId' })
-  Internship: Internship;
+  // @Exclude()
+  // @OneToOne(() => Internship, (internship) => internship.Student)
+  // @JoinColumn({ name: 'InternshipId' })
+  // Internship: Internship;
 }

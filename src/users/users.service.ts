@@ -30,7 +30,6 @@ export class UsersService {
     return this.usersRepository.findOne({
       where: { Id: id },
       relations: {
-        Internship: true,
         SchoolClass: true,
       },
     });
