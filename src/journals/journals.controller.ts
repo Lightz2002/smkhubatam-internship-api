@@ -25,31 +25,13 @@ export class JournalsController {
   @Get()
   @UseGuards(AuthGuard('jwt'))
   async getJournals(@CurrentUser() user: User) {
-    const conditions = {
-      where: {},
-    };
-
-    if (user?.Role?.Name?.toLowerCase() === 'student') {
-      conditions.where = {
-        Student: {
-          Id: user?.Id,
-        },
-      };
-    }
-
-    return await this.journalService.findAll(conditions);
+    return await this.journalService.getJournalByUserRole(user);
   }
 
   @Get(':journalId')
   async getJournal(@Param('journalId') journalId) {
     const journal = await this.journalService.findOne(journalId);
-    const internship = await this.internshipsService.findOneByStudent(
-      journal.Student.Id,
-    );
-    return {
-      ...journal,
-      Internship: internship,
-    };
+    return journal;
   }
 
   @Post()

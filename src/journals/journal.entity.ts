@@ -1,4 +1,3 @@
-import { Location } from 'src/locations/location.entity';
 import { Status } from 'src/status/status.entity';
 import { User } from 'src/users/user.entity';
 import {
@@ -6,9 +5,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   JoinColumn,
-  OneToOne,
   ManyToOne,
-  CreateDateColumn,
 } from 'typeorm';
 
 @Entity()

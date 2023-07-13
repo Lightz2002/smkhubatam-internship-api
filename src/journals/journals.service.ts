@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Location } from 'src/locations/location.entity';
 import { Status } from 'src/status/status.entity';
 import { User } from 'src/users/user.entity';
 import { Equal, Not, Repository } from 'typeorm';
@@ -31,7 +30,59 @@ export class JournalsService {
   }
 
   findOne(id: string): Promise<Journal> {
-    return this.journalRepository.findOneBy({ Id: id });
+    return this.journalRepository.findOne({
+      where: { Id: id },
+      relations: {
+        Student: {
+          Internship: true,
+        },
+      },
+    });
+  }
+
+  async getJournalByUserRole(@CurrentUser() user: User) {
+    let conditions = {};
+
+    switch (user?.Role?.Name?.toLowerCase()) {
+      case 'student':
+        conditions = {
+          Student: user,
+        };
+        break;
+      case 'school mentor':
+        conditions = {
+          Student: {
+            Internship: {
+              SchoolMentor: user,
+            },
+          },
+        };
+        break;
+      case 'field mentor':
+        conditions = {
+          Student: {
+            Internship: {
+              FieldMentor: user,
+            },
+          },
+        };
+      default:
+        break;
+    }
+
+    const journals = await this.journalRepository.find({
+      relations: {
+        Student: {
+          Internship: {
+            SchoolMentor: true,
+            FieldMentor: true,
+          },
+        },
+      },
+      where: conditions,
+    });
+
+    return journals;
   }
 
   async create(
