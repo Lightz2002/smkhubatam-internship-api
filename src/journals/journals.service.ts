@@ -80,6 +80,9 @@ export class JournalsService {
         },
       },
       where: conditions,
+      order: {
+        Date: 'DESC',
+      },
     });
 
     return journals;
