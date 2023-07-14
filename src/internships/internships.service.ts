@@ -72,6 +72,11 @@ export class InternshipsService {
     internship.SchoolMentor = schoolMentor;
     internship.Status = status;
 
+    student.Internship = internship;
+    await this.userRepository.save(student);
+
+    student.Internship = undefined;
+
     return this.internshipRepository.save(internship);
   }
 

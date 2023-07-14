@@ -77,7 +77,9 @@ export class User extends BaseEntity {
   @Column({ default: null, type: 'longtext' })
   Image: string;
 
-  @OneToOne(() => Internship, (internship) => internship.Student)
+  @OneToOne(() => Internship, (internship) => internship.Student, {
+    cascade: true,
+  })
   @JoinColumn({ name: 'InternshipId' })
   Internship: Internship;
 }
